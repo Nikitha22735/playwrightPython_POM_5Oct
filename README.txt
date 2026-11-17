@@ -5,3 +5,5 @@ start report.html
 2. Allure
 pip install allure-pytest
 pytest --headed -n 4 --alluredir=allureresults
+
+update2
