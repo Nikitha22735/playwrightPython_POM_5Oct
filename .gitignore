@@ -1,0 +1,7 @@
+__pycache__
+allureresults
+report.html
+.deepeval
+.pytest_cache
+test/__pycache__/
+assets
