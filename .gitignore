@@ -5,3 +5,4 @@ report.html
 .pytest_cache
 test/__pycache__/
 assets
+.env
