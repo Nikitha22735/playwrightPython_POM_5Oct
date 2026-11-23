@@ -1,5 +1,5 @@
 
-# import allure
+import allure
 from pages.auth import Auth
 from pages.home import HomePage
 import pytest
@@ -25,16 +25,25 @@ def login(page,amazonNavigation):
     # yield
     # logout
 
-# @pytest.hookimpl(hookwrapper=True)
-# def pytest_runtest_makereport(item):
-#     outcome = yield
-#     result = outcome.get_result()
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item):
+    outcome = yield
+    result = outcome.get_result()
 
-#     if result.failed:
-#         page = item.funcargs.get("page")
-#         if page:
-#             allure.attach(
-#                 page.screenshot(),
-#                 name="failedstep",
-#                 attachment_type=allure.attachment_type.PNG
-#             )
+    if result.failed and result.when == "call":
+        pages = []
+        for value in item.funcargs.values():
+            if callable(getattr(value, "screenshot", None)):
+                pages.append(value)
+            else:
+                pages.extend(
+                    page for page in getattr(value, "pages", [])
+                    if callable(getattr(page, "screenshot", None))
+                )
+
+        for index, page in enumerate(pages, start=1):
+            allure.attach(
+                page.screenshot(),
+                name=f"failedstep-{index}",
+                attachment_type=allure.attachment_type.PNG
+            )

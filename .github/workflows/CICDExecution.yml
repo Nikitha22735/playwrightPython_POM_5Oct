@@ -5,6 +5,9 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+  schedule:
+    - cron: '* 21 * * *' # minute hour day month day-of-week (every minute) UTC
 jobs:
   build:
     runs-on: ubuntu-latest
