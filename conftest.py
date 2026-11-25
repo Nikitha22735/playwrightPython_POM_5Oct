@@ -4,6 +4,7 @@ from pages.auth import Auth
 from pages.home import HomePage
 import pytest
 from utils.jsonHandling import grabJsonValue
+from playwright.sync_api import Page, expect, sync_playwright
 
 
 @pytest.fixture()
@@ -47,3 +48,32 @@ def pytest_runtest_makereport(item):
                 name=f"failedstep-{index}",
                 attachment_type=allure.attachment_type.PNG
             )
+
+
+
+
+
+
+# @pytest.fixture(scope="session")
+# def cookies():
+#      with sync_playwright() as p:
+#             browser = p.chromium.launch(headless=False,slow_mo=5000)
+#             context = browser.new_context()
+#             page = context.new_page()
+#             page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+#             page.get_by_role("textbox", name="Username").click()
+#             page.get_by_role("textbox", name="Username").fill("Admin")
+#             page.get_by_role("textbox", name="Password").click()
+#             page.get_by_role("textbox", name="Password").fill("admin123")
+#             page.get_by_role("button", name="Login").click()
+#             expect(page.get_by_role("heading", name="Dashboard")).to_be_visible()
+#             context.storage_state(path='testData\\cookies.json')
+
+
+# @pytest.fixture()
+# def page():
+#     with sync_playwright() as p:
+#         browser = p.chromium.launch(headless=False,slow_mo=5000)
+#         context = browser.new_context(storage_state='testData\\cookies.json')
+#         page = context.new_page()
+#         yield page
